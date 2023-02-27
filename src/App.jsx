@@ -4,6 +4,8 @@ import HomePage from "./pages/HomePage/HomePage";
 import ShopPage from "./pages/ShopPage/ShopPage";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
+import LoginPage from "./pages/LoginPage/LoginPage";
+import SignupPage from "./pages/SignupPage/SignupPage";
 
 const AppLayout = () => {
   return (
@@ -41,10 +43,14 @@ const appRouter = createBrowserRouter([
       // },
     ],
   },
-  // {
-  //   path: "/login",
-  //   element: <LoginPage />,
-  // },
+   {
+    path: "/login",
+    element: <LoginPage />,
+  },
+   {
+    path: "/signup",
+    element: <SignupPage />,
+  },
 ]);
 
 function App() {
