@@ -3,8 +3,8 @@ import HeaderImg from "../../assets/header.png";
 
 const Header = () => {
   return (
-    <div>
-      <div className="flex mt-16 p-16 justify-center item-center container mx-auto">
+    <div className="bg-[#F5F5F5]">
+      <div className="flex pt-48 p-20 justify-center item-center container mx-auto ">
         <div className="section">
           <h1 className="text-8xl text-[#1363DF] mb-8 font-bold">
             Fashion <span className="text-[#47B5FF]">Up</span>Your{" "}

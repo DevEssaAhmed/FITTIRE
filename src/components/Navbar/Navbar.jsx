@@ -7,7 +7,7 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div className="flex items-center justify-between h-20 px-4 ">
+    <div className="fixed backdrop-blur-md  flex  items-center justify-between w-full h-20 px-4">
       <div className="ml-8">
         <img className="w-48" src={logo} alt="logo" />
       </div>
