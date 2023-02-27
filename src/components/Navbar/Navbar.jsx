@@ -7,25 +7,27 @@ const Navbar = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
-    <div className="fixed backdrop-blur-md  flex  items-center justify-between w-full h-20 px-4">
+    <div className="fixed top-0   backdrop-blur-md  flex  items-center justify-between w-full h-20 px-4">
       <div className="ml-8">
-        <img className="w-48" src={logo} alt="logo" />
+        <Link to="/">
+          <img className="w-48 hover:scale-105" src={logo} alt="logo" />
+        </Link>
       </div>
       <div>
         <ul className="flex items-center  ml-5 text-[#47B5FF]">
-          <li className="ml-5">
-            <Link>Home</Link>
+          <li className="ml-5 hover:overline">
+            <Link to="/">Home</Link>
           </li>
-          <li className="ml-5">
-            <Link>Shop </Link>
+          <li className="ml-5 hover:overline">
+            <Link to="/shop">Shop </Link>
           </li>
-          <li className="ml-5">
+          <li className="ml-5 hover:overline">
             <Link>Collection</Link>
           </li>
           <li className="ml-5">
             <Link
               to=""
-              className={navColor ? "nav-links-scroll" : "nav-links"}
+              className='hover:text-[#1363DF]'
               href=""
             >
               <i className="fa-solid fa-cart-shopping"></i>

@@ -1,6 +1,7 @@
 import "./App.css";
 import { Outlet, RouterProvider, createBrowserRouter } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
+import ShopPage from "./pages/ShopPage/ShopPage";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 
@@ -30,10 +31,10 @@ const appRouter = createBrowserRouter([
       //   path: "/about",
       //   element: <AboutPage />,
       // },
-      // {
-      //   path: "/shop",
-      //   element: <ContactPage />,
-      // },
+       {
+        path: "/shop",
+        element: <ShopPage />,
+      },
       // {
       //   path: "/checkout",
       //   element: <CheckoutPage />,
