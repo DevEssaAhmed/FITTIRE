@@ -1,5 +1,6 @@
 import React from "react";
 import Logo from "../../assets/logo.svg";
+import { Link } from "react-router-dom";
 
 const LoginPage = () => {
   return (
@@ -78,12 +79,12 @@ const LoginPage = () => {
                 </div>
 
                 <div className="text-sm">
-                  <a
-                    href="#"
+                  <Link
+                  to="/signup"
                     className="font-medium text-[#4785FF]  hover:text-indigo-500"
                   >
-                    Forgot your password?
-                  </a>
+                    Don't have an account?
+                  </Link>
                 </div>
               </div>
 
