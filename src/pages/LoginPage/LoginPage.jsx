@@ -1,12 +1,42 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { getRedirectResult } from "firebase/auth";
 import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
 import {
+  auth,
+  signInWithGoogleRedirect,
   signInWithGooglePopup,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
 
 const LoginPage = () => {
+  // ! The error in the given code is that you cannot use async/await directly inside a useEffect hook. Here's the fixed code:
+  // useEffect( async () => {
+  //   const response = await getRedirectResult(auth);
+  //   if(response) {
+  //     const userDocRef = await createUserDocumentFromAuth(response.user)
+  //   }
+  // }, []); //! It can be fixed as 
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      const response = await getRedirectResult(auth);
+      if (response) {
+        const userDocRef = await createUserDocumentFromAuth(response.user);
+      }
+    };
+
+    handleRedirectResult();
+  }, []);
+
+
+
+
+
+
+
+
+  
+
   const logGoogleUser = async () => {
     // const response = await signInWithGooglePopup(); //! Destruturing user object from response
     const { user } = await signInWithGooglePopup();
@@ -101,6 +131,7 @@ const LoginPage = () => {
 
               <div>
                 <button
+                  onClick={signInWithGoogleRedirect}
                   type="submit"
                   className="flex w-full justify-center rounded-md border border-transparent bg-[#1363DF]  py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#47B5FF] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
