@@ -1,10 +1,21 @@
 import React from "react";
 import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
+import {
+  signInWithGooglePopup,
+  createUserDocumentFromAuth,
+} from "../../utils/firebase/firebase.utils";
 
 const LoginPage = () => {
+  const logGoogleUser = async () => {
+    // const response = await signInWithGooglePopup(); //! Destruturing user object from response
+    const { user } = await signInWithGooglePopup();
+
+    createUserDocumentFromAuth(user);
+  };
+
   return (
-    < div className="h-full bg-gray-50 pt-20">
+    <div className="h-full bg-gray-50 pt-20">
       {/*
         This example requires updating your template:
 
@@ -16,7 +27,7 @@ const LoginPage = () => {
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img className="mx-auto h-12 w-auto" src={Logo} alt="Fittire" />
-          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-900">
+          <h2 className="mt-6 text-center text-3xl font-bold tracking-tight text-gray-800">
             Sign in to your account
           </h2>
         </div>
@@ -80,7 +91,7 @@ const LoginPage = () => {
 
                 <div className="text-sm">
                   <Link
-                  to="/signup"
+                    to="/signup"
                     className="font-medium text-[#4785FF]  hover:text-indigo-500"
                   >
                     Don't have an account?
@@ -110,14 +121,14 @@ const LoginPage = () => {
                 </div>
               </div>
 
-              <a
-                href="#"
+              <button
+                onClick={logGoogleUser}
                 className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
               >
                 <span className="sr-only">Sign in with Google</span>
                 <svg
-                className="h-6 w-6"
-                aria-current= "true"
+                  className="h-6 w-6"
+                  aria-current="true"
                   xmlns="http://www.w3.org/2000/svg"
                   x="0px"
                   y="0px"
@@ -142,7 +153,7 @@ const LoginPage = () => {
                     d="M43.611,20.083L43.595,20L42,20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571	c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z"
                   ></path>
                 </svg>
-              </a>
+              </button>
             </div>
           </div>
         </div>
