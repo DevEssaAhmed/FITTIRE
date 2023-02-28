@@ -4,7 +4,7 @@ import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
 import {
   auth,
-  signInWithGoogleRedirect,
+ 
   signInWithGooglePopup,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
@@ -17,16 +17,6 @@ const LoginPage = () => {
   //     const userDocRef = await createUserDocumentFromAuth(response.user)
   //   }
   // }, []); //! It can be fixed as 
-  useEffect(() => {
-    const handleRedirectResult = async () => {
-      const response = await getRedirectResult(auth);
-      if (response) {
-        const userDocRef = await createUserDocumentFromAuth(response.user);
-      }
-    };
-
-    handleRedirectResult();
-  }, []);
 
 
 
@@ -131,7 +121,7 @@ const LoginPage = () => {
 
               <div>
                 <button
-                  onClick={signInWithGoogleRedirect}
+                 
                   type="submit"
                   className="flex w-full justify-center rounded-md border border-transparent bg-[#1363DF]  py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#47B5FF] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >

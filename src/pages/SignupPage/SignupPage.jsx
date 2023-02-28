@@ -1,8 +1,24 @@
-import React from 'react'
+import React, { useState } from "react";
 import Logo from "../../assets/logo.svg";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
+
+const defaultFormFields = {
+  displayName: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+};
 
 const SignupPage = () => {
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { displayName, email, password, confirmPassword } = formFields;
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+// ! The below function extracts value from the name then set it to the current value of the event. For example name is displayName and value is Essa so it will update the name value in formFields to Essa and since we are using vales from formfields in input so it will update the,
+    setFormFields({ ...formFields, [name]: value });
+  };
+
   return (
     <div className="h-full bg-gray-50 pt-10">
       {/*
@@ -34,16 +50,16 @@ const SignupPage = () => {
                 <div className="mt-1">
                   <input
                     id="name"
-                    name="text"
+                    name="displayName"
                     type="text"
-                
+                    onChange={handleChange}
+                    value={displayName}
                     required
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
               <div>
-
                 <label
                   htmlFor="email"
                   className="block text-sm font-medium text-gray-700"
@@ -55,6 +71,8 @@ const SignupPage = () => {
                     id="email"
                     name="email"
                     type="email"
+                    onChange={handleChange}
+                    value={email}
                     autoComplete="email"
                     required
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -71,16 +89,18 @@ const SignupPage = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                    id="password"
+                    id="confirmPassword"
                     name="password"
                     type="password"
+                    value={password}
+                    onChange={handleChange}
                     autoComplete="current-password"
                     required
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
                   />
                 </div>
               </div>
-           
+
               <div>
                 <label
                   htmlFor="password"
@@ -91,8 +111,10 @@ const SignupPage = () => {
                 <div className="mt-1">
                   <input
                     id="password"
-                    name="password"
+                    name="confirmPassword"
                     type="password"
+                    value={confirmPassword}
+                    onChange={handleChange}
                     autoComplete="current-password"
                     required
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -100,7 +122,6 @@ const SignupPage = () => {
                 </div>
               </div>
 
-           
               <div>
                 <button
                   type="submit"
@@ -118,7 +139,7 @@ const SignupPage = () => {
                 </div>
                 <div className="relative flex justify-center text-sm">
                   <span className="bg-white px-2 text-gray-500">
-                   Already Registered
+                    Already Registered
                   </span>
                 </div>
               </div>
@@ -127,7 +148,7 @@ const SignupPage = () => {
                 to="/login"
                 className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-700 shadow-sm hover:bg-gray-50"
               >
-              Sign In
+                Sign In
               </Link>
             </div>
           </div>
@@ -135,45 +156,6 @@ const SignupPage = () => {
       </div>
     </div>
   );
-}
+};
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-export default SignupPage
+export default SignupPage;
