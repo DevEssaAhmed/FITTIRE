@@ -1,10 +1,11 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getRedirectResult } from "firebase/auth";
 import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   auth,
- 
+  signInAuthUserWithEmailAndPassword,
   signInWithGooglePopup,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
@@ -16,34 +17,57 @@ const LoginPage = () => {
   //   if(response) {
   //     const userDocRef = await createUserDocumentFromAuth(response.user)
   //   }
-  // }, []); //! It can be fixed as 
+  // }, []); //! It can be fixed as
 
+   const navigate = useNavigate();
+  const defaultFormFields = {
+    email: "",
+    password: "",
+  };
 
+  const [formFields, setFormFields] = useState(defaultFormFields);
+  const { email, password } = formFields;
 
+  const resetFormFields = () => {
+    setFormFields(defaultFormFields);
+  };
 
-
-
-
-
-  
-
-  const logGoogleUser = async () => {
+  const signInWithGoogle = async () => {
     // const response = await signInWithGooglePopup(); //! Destruturing user object from response
     const { user } = await signInWithGooglePopup();
-
+    if (user) {navigate("/");}
     createUserDocumentFromAuth(user);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    try {
+      await signInAuthUserWithEmailAndPassword(email, password);
+      navigate("/")
+      resetFormFields();
+    } catch (error) {
+      switch (error.code) {
+        case "auth/wrong-password":
+          alert("Incorrect Password");
+          break;
+        case "auth/user-not-found":
+          alert("No user associated with this Email");
+          break;
+        default:
+          console.log(error);
+      }
+    }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setFormFields({ ...formFields, [name]: value });
   };
 
   return (
     <div className="h-full bg-gray-50 pt-20">
-      {/*
-        This example requires updating your template:
-
-        ```
-        <html class="h-full bg-gray-50">
-        <body class="h-full">
-        ```
-      */}
       <div className="flex min-h-full flex-col justify-center py-12 sm:px-6 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-md">
           <img className="mx-auto h-12 w-auto" src={Logo} alt="Fittire" />
@@ -54,7 +78,7 @@ const LoginPage = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit}>
               <div>
                 <label
                   htmlFor="email"
@@ -66,7 +90,9 @@ const LoginPage = () => {
                   <input
                     id="email"
                     name="email"
+                    value={email}
                     type="email"
+                    onChange={handleChange}
                     autoComplete="email"
                     required
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -86,6 +112,8 @@ const LoginPage = () => {
                     id="password"
                     name="password"
                     type="password"
+                    value={password}
+                    onChange={handleChange}
                     autoComplete="current-password"
                     required
                     className="block w-full appearance-none rounded-md border border-gray-300 px-3 py-2 placeholder-gray-400 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm"
@@ -94,21 +122,6 @@ const LoginPage = () => {
               </div>
 
               <div className="flex items-center justify-between">
-                <div className="flex items-center">
-                  <input
-                    id="remember-me"
-                    name="remember-me"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                  />
-                  <label
-                    htmlFor="remember-me"
-                    className="ml-2 block text-sm text-gray-900"
-                  >
-                    Remember me
-                  </label>
-                </div>
-
                 <div className="text-sm">
                   <Link
                     to="/signup"
@@ -121,7 +134,6 @@ const LoginPage = () => {
 
               <div>
                 <button
-                 
                   type="submit"
                   className="flex w-full justify-center rounded-md border border-transparent bg-[#1363DF]  py-2 px-4 text-sm font-medium text-white shadow-sm hover:bg-[#47B5FF] focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                 >
@@ -143,7 +155,8 @@ const LoginPage = () => {
               </div>
 
               <button
-                onClick={logGoogleUser}
+                onClick={signInWithGoogle}
+                type="button"
                 className="inline-flex w-full justify-center rounded-md border border-gray-300 bg-white py-2 px-4 text-sm font-medium text-gray-500 shadow-sm hover:bg-gray-50"
               >
                 <span className="sr-only">Sign in with Google</span>

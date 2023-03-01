@@ -34,23 +34,25 @@ const Navbar = () => {
             </Link>
           </li>
           <li className="ml-5">
+            <Link to="/login">
             {isLoggedIn ? (
               <button
-                className="nav-button
-                bg-[#47B5FF] text-white px-4 py-2 rounded-md"
-                onClick={() => setIsLoggedIn(false)}
+              className="nav-button
+              bg-[#47B5FF] text-white px-4 py-2 rounded-md"
+              onClick={() => setIsLoggedIn(false)}
               >
                 LogIn
               </button>
             ) : (
               <button
-                className="nav-button  bg-[#47B5FF] text-white px-4 py-2 rounded-md
-                "
-                onClick={() => setIsLoggedIn(true)}
+              className="nav-button  bg-[#47B5FF] text-white px-4 py-2 rounded-md
+              "
+              onClick={() => setIsLoggedIn(true)}
               >
                 LogOut
               </button>
             )}
+            </Link>
           </li>
         </ul>
       </div>
