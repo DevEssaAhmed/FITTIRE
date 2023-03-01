@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
+import {
+  createAuthUserWithEmailAndPassword,
+  createUserDocumentFromAuth,
+} from "../../utils/firebase/firebase.utils";
 
 const defaultFormFields = {
   displayName: "",
@@ -13,9 +17,42 @@ const SignupPage = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { displayName, email, password, confirmPassword } = formFields;
 
+
+const resetFormFields = () => {
+  setFormFields(defaultFormFields)
+}
+
+
+
+
+
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (password !== confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
+    try {
+      const {user} = await createAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      await createUserDocumentFromAuth(user, { displayName });
+      resetFormFields()
+    } catch (error) {
+      if (error.code === 'auth/email-already-in-use') {
+        alert('Create create user, email already')
+      } else{
+
+        console.log("User Creation Encountered an error", error);
+      }
+    }
+  };
+
   const handleChange = (event) => {
     const { name, value } = event.target;
-// ! The below function extracts value from the name then set it to the current value of the event. For example name is displayName and value is Essa so it will update the name value in formFields to Essa and since we are using vales from formfields in input so it will update the,
+    // ! The below function extracts value from the name then set it to the current value of the event. For example name is displayName and value is Essa so it will update the name value in formFields to Essa and since we are using vales from formfields in input so it will update the,
     setFormFields({ ...formFields, [name]: value });
   };
 
@@ -39,7 +76,7 @@ const SignupPage = () => {
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
           <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
-            <form className="space-y-6" action="#" method="POST">
+            <form className="space-y-6" onSubmit={handleSubmit} method="POST">
               <div>
                 <label
                   htmlFor="email"
@@ -89,9 +126,10 @@ const SignupPage = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                    id="confirmPassword"
+                    id="password"
                     name="password"
                     type="password"
+                    // pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
                     value={password}
                     onChange={handleChange}
                     autoComplete="current-password"
@@ -110,7 +148,7 @@ const SignupPage = () => {
                 </label>
                 <div className="mt-1">
                   <input
-                    id="password"
+                    id="confirmPassword"
                     name="confirmPassword"
                     type="password"
                     value={confirmPassword}

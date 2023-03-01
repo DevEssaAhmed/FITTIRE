@@ -9,6 +9,7 @@ import {
   signInWithRedirect,
   signInWithPopup,
   GoogleAuthProvider,
+  createUserWithEmailAndPassword,
 } from "firebase/auth";
 
 import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
@@ -32,13 +33,15 @@ googleProvider.setCustomParameters({
 });
 
 export const auth = getAuth();
-export const signInWithGooglePopup = () => signInWithPopup(auth, googleProvider);
+export const signInWithGooglePopup = () =>
+  signInWithPopup(auth, googleProvider);
 // export const signInWithGoogleRedirect = () => signInWithRedirect(auth,googleProvider)
 
 // ! Database
 export const db = getFirestore();
 
-export const createUserDocumentFromAuth = async (userAuth) => {
+export const createUserDocumentFromAuth = async (userAuth,additionalInformation) => {
+  if (!userAuth) return;
   const userDocRef = doc(db, "users", userAuth.uid); //! userDocRef takes three arguments Database,Collection,Unique Identifier
   // console.log(userDocRef)
   // ? If the collection does not exist Google will generate it
@@ -51,7 +54,7 @@ export const createUserDocumentFromAuth = async (userAuth) => {
   //! Do nothing
   //? If user data does not exists
   if (!userSnapshot.exists()) {
-    const { displayName, email } = userAuth;
+    const { displayName, email} = userAuth;
     const createdAt = new Date();
 
     try {
@@ -59,10 +62,16 @@ export const createUserDocumentFromAuth = async (userAuth) => {
         displayName,
         email,
         createdAt,
+        ...additionalInformation 
       });
     } catch (error) {
-        console.log('Error creating the user', error.message)
+      console.log("Error creating the user", error.message);
     }
   }
-  return userDocRef
+  return userDocRef;
+};
+
+export const createAuthUserWithEmailAndPassword = async (email, password) => {
+  if (!email || !password) return;
+  return await createUserWithEmailAndPassword(auth, email, password);
 };
