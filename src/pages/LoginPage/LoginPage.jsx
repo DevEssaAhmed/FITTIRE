@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { getRedirectResult } from "firebase/auth";
 import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
@@ -9,6 +9,7 @@ import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
+import { UserContext } from "../../contexts/user-context";
 
 const LoginPage = () => {
   // ! The error in the given code is that you cannot use async/await directly inside a useEffect hook. Here's the fixed code:
@@ -19,7 +20,7 @@ const LoginPage = () => {
   //   }
   // }, []); //! It can be fixed as
 
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const defaultFormFields = {
     email: "",
     password: "",
@@ -28,6 +29,8 @@ const LoginPage = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
+  const { setCurrentUser } = useContext(UserContext);
+
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
   };
@@ -35,7 +38,9 @@ const LoginPage = () => {
   const signInWithGoogle = async () => {
     // const response = await signInWithGooglePopup(); //! Destruturing user object from response
     const { user } = await signInWithGooglePopup();
-    if (user) {navigate("/");}
+    if (user) {
+      navigate("/");
+    }
     createUserDocumentFromAuth(user);
   };
 
@@ -43,8 +48,12 @@ const LoginPage = () => {
     event.preventDefault();
 
     try {
-      await signInAuthUserWithEmailAndPassword(email, password);
-      navigate("/")
+      const { user } = await signInAuthUserWithEmailAndPassword(
+        email,
+        password
+      );
+      setCurrentUser(user);
+      navigate("/");
       resetFormFields();
     } catch (error) {
       switch (error.code) {

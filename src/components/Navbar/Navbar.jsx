@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
 
+import { UserContext } from "../../contexts/user-context";
+import { auth, signOutUser } from "../../utils/firebase/firebase.utils";
+
 const Navbar = () => {
   const [navColor, setColor] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  // const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const { currentUser,setCurrentUser } = useContext(UserContext);
+
+  const signOutHandler = async () => {
+    await signOutUser();
+    setCurrentUser(null);
+  };
 
   return (
     <div className="fixed top-0   backdrop-blur-md  flex  items-center justify-between w-full h-20 px-4">
@@ -25,34 +34,31 @@ const Navbar = () => {
             <Link>Collection</Link>
           </li>
           <li className="ml-5">
-            <Link
-              to=""
-              className='hover:text-[#1363DF]'
-              href=""
-            >
+            <Link to="" className="hover:text-[#1363DF]" href="">
               <i className="fa-solid fa-cart-shopping"></i>
             </Link>
           </li>
           <li className="ml-5">
-            <Link to="/login">
-            {isLoggedIn ? (
-              <button
-              className="nav-button
+            {!currentUser ? (
+              <Link to="/login">
+                {" "}
+                <button
+                  className="nav-button
               bg-[#47B5FF] text-white px-4 py-2 rounded-md"
-              onClick={() => setIsLoggedIn(false)}
-              >
-                LogIn
-              </button>
+                  // onClick={() => setIsLoggedIn(false)}
+                >
+                  LogIn
+                </button>
+              </Link>
             ) : (
               <button
-              className="nav-button  bg-[#47B5FF] text-white px-4 py-2 rounded-md
-              "
-              onClick={() => setIsLoggedIn(true)}
+                className="nav-button  bg-[#47B5FF] text-white px-4 py-2 rounded-md"
+                // onClick={() => setIsLoggedIn(true)}
+                onClick={signOutHandler}
               >
                 LogOut
               </button>
             )}
-            </Link>
           </li>
         </ul>
       </div>
