@@ -1,36 +1,57 @@
-import React from 'react'
+import React from "react";
 
-const ProductCard = () => {
+const ProductCard = (props) => {
+ const  {name,imageUrl,price} = props
   return (
-    <div class="flex justify-center">
-      <div class="block max-w-sm rounded-lg bg-white shadow-lg dark:bg-neutral-700">
-        <a href="#!">
-          <img
-            class="rounded-t-lg"
-            src="https://tecdn.b-cdn.net/img/new/standard/nature/184.jpg"
-            alt=""
-          />
-        </a>
-        <div class="p-6">
-          <h5 class="mb-2 text-xl font-medium leading-tight text-neutral-800 dark:text-neutral-50">
-            Card title
+    <div className="relative m-10 flex w-full max-w-xs flex-col overflow-hidden rounded-lg border border-gray-100 bg-white shadow-md">
+      <a
+        className="relative mx-3 mt-3 flex h-60 overflow-hidden rounded-xl"
+        href="#"
+      >
+        <img
+          className="w-full h-full object-cover"
+          src={imageUrl}
+          alt="product image"
+        />
+        <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+          39% OFF
+        </span>
+      </a>
+      <div className="mt-4 px-5 pb-5">
+        <a href="#">
+          <h5 className="text-xl tracking-tight text-slate-900">
+            {name}
           </h5>
-          <p class="mb-4 text-base text-neutral-600 dark:text-neutral-200">
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+        </a>
+        <div className="mt-2 mb-5 flex items-center justify-between">
+          <p>
+            <span className="text-2xl font-bold text-slate-900">${price}</span>
+            {/* <span className="text-sm text-slate-900 line-through">$699</span> */}
           </p>
-          <button
-            type="button"
-            class="inline-block rounded bg-primary px-6 pt-2.5 pb-2 text-xs font-medium uppercase leading-normal text-white shadow-[0_4px_9px_-4px_#3b71ca] transition duration-150 ease-in-out hover:bg-primary-600 hover:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:bg-primary-600 focus:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)] focus:outline-none focus:ring-0 active:bg-primary-700 active:shadow-[0_8px_9px_-4px_rgba(59,113,202,0.3),0_4px_18px_0_rgba(59,113,202,0.2)]"
-            data-te-ripple-init
-            data-te-ripple-color="light"
-          >
-            Button
-          </button>
         </div>
+        <a
+          href="#"
+          className="flex items-center justify-center rounded-md bg-slate-900 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="mr-2 h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
+            />
+          </svg>
+          Add to cart
+        </a>
       </div>
     </div>
   );
-}
+};
 
-export default ProductCard
+export default ProductCard;
