@@ -10,10 +10,12 @@ const Navbar = () => {
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { currentUser,setCurrentUser } = useContext(UserContext);
 
-  const signOutHandler = async () => {
-    await signOutUser();
-    setCurrentUser(null);
-  };
+
+  //! This is not needed anymore 
+  // const signOutHandler = async () => {
+  //   await signOutUser();
+  //   setCurrentUser(null);
+  // };
 
   return (
     <div className="fixed top-0   backdrop-blur-md  flex  items-center justify-between w-full h-20 px-4">
@@ -54,7 +56,7 @@ const Navbar = () => {
               <button
                 className="nav-button  bg-[#47B5FF] text-white px-4 py-2 rounded-md"
                 // onClick={() => setIsLoggedIn(true)}
-                onClick={signOutHandler}
+                onClick={signOutUser}
               >
                 LogOut
               </button>

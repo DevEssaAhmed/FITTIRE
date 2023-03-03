@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useState } from "react";
 import { getRedirectResult } from "firebase/auth";
 import Logo from "../../assets/logo.svg";
 import { Link } from "react-router-dom";
@@ -9,7 +9,7 @@ import {
   signInWithGooglePopup,
   createUserDocumentFromAuth,
 } from "../../utils/firebase/firebase.utils";
-import { UserContext } from "../../contexts/user-context";
+// import { UserContext } from "../../contexts/user-context";
 
 const LoginPage = () => {
   // ! The error in the given code is that you cannot use async/await directly inside a useEffect hook. Here's the fixed code:
@@ -29,7 +29,7 @@ const LoginPage = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
 
-  const { setCurrentUser } = useContext(UserContext);
+  // const { setCurrentUser } = useContext(UserContext); //! Now we are using only AuthListener to keep track of Authentication
 
   const resetFormFields = () => {
     setFormFields(defaultFormFields);
@@ -41,7 +41,7 @@ const LoginPage = () => {
     if (user) {
       navigate("/");
     }
-    createUserDocumentFromAuth(user);
+    // createUserDocumentFromAuth(user); //! Handled with UserContext
   };
 
   const handleSubmit = async (event) => {
@@ -52,7 +52,7 @@ const LoginPage = () => {
         email,
         password
       );
-      setCurrentUser(user);
+      // setCurrentUser(user); //! NO need
       navigate("/");
       resetFormFields();
     } catch (error) {
