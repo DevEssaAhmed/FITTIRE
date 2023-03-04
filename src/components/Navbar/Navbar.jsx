@@ -1,6 +1,7 @@
 import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo.svg";
+import CartDropDown from "../CartDropDown/CartDropDown";
 
 import { UserContext } from "../../contexts/user-context";
 import { auth, signOutUser } from "../../utils/firebase/firebase.utils";
@@ -38,6 +39,7 @@ const Navbar = () => {
           <li className="ml-5">
             <Link to="" className="hover:text-[#1363DF]" href="">
               <i className="fa-solid fa-cart-shopping"></i>
+              <CartDropDown/>
             </Link>
           </li>
           <li className="ml-5">
