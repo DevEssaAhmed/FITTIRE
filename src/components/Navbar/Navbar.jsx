@@ -4,12 +4,14 @@ import logo from "../../assets/logo.svg";
 import CartDropDown from "../CartDropDown/CartDropDown";
 
 import { UserContext } from "../../contexts/user-context";
+import { CartContext } from "../../contexts/cart-context";
 import { auth, signOutUser } from "../../utils/firebase/firebase.utils";
 
 const Navbar = () => {
   const [navColor, setColor] = useState(false);
   // const [isLoggedIn, setIsLoggedIn] = useState(false);
   const { currentUser,setCurrentUser } = useContext(UserContext);
+  const { isCartOpen,setIsCartOpen } = useContext(CartContext);
 
 
   //! This is not needed anymore 
@@ -17,6 +19,12 @@ const Navbar = () => {
   //   await signOutUser();
   //   setCurrentUser(null);
   // };
+
+
+const toggleIsCartOpen = () => {
+  setIsCartOpen(!isCartOpen)
+}
+
 
   return (
     <div className="fixed top-0   backdrop-blur-md  flex  items-center justify-between w-full h-20 px-4">
@@ -37,9 +45,9 @@ const Navbar = () => {
             <Link>Collection</Link>
           </li>
           <li className="ml-5">
-            <Link to="" className="hover:text-[#1363DF]" href="">
+            <Link  onClick={toggleIsCartOpen} className="hover:text-[#1363DF]" href="">
               <i className="fa-solid fa-cart-shopping"></i>
-              <CartDropDown/>
+              {isCartOpen && <CartDropDown/>}
             </Link>
           </li>
           <li className="ml-5">
