@@ -1,16 +1,27 @@
 import React, { useContext } from "react";
 import ProductCard from "../ProductCard/ProductCard";
-import { ProductsContext } from "../../contexts/products-context";
+import { CategoriesContext } from "../../contexts/category-context";
 
 const ProductList = () => {
-  const { products } = useContext(ProductsContext);
-  console.log(products);
+  const { categoriesMap } = useContext(CategoriesContext);
+  // console.log(products);
 
   return (
-    <div className="flex flex-wrap justify-center">
-      {products.map((product) => {
+    <div >
+      {/* {products.map((product) => {
         return <ProductCard key={product.id} product={product} />;
-      })}
+      })} */}
+
+      {Object.keys(categoriesMap).map((title) => (
+        <React.Fragment key={title}>
+          <h1 className="text-center text-5xl">{title.toUpperCase()}</h1>
+          <div className="flex flex-wrap justify-center">
+            {categoriesMap[title].map((product) => {
+              return <ProductCard key={product.id} product={product} />;
+            })}
+          </div>
+        </React.Fragment>
+      ))}
     </div>
   );
 };

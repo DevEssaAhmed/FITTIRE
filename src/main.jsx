@@ -3,17 +3,17 @@ import ReactDOM from "react-dom/client";
 import App from "./App";
 import { UserProvider } from "./contexts/user-context";
 import "./index.css";
-import { ProductsProvider } from "./contexts/products-context";
+import { CategoriesProvider } from "./contexts/category-context";
 import { CartProvider } from "./contexts/cart-context";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <UserProvider>
-      <ProductsProvider>
+      <CategoriesProvider>
         <CartProvider>
           <App />
         </CartProvider>
-      </ProductsProvider>
+      </CategoriesProvider>
     </UserProvider>
   </React.StrictMode>
 );
