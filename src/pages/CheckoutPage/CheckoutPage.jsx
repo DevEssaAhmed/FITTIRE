@@ -3,7 +3,7 @@ import CheckoutItem from "../../components/CheckoutItems/CheckoutItem";
 import { CartContext } from "../../contexts/cart-context";
 
 const CheckoutPage = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems,cartTotal } = useContext(CartContext);
   return (
     <div>
       <section className="h-screen bg-gray-100 py-12 sm:py-16 lg:py-20">
@@ -23,8 +23,8 @@ const CheckoutPage = () => {
                 </div>
 
                 <div>
-                  <div className="mt-6 border-t border-b py-2">
-                    <div className="flex items-center justify-between">
+                  <div className="mt-6  border-b py-2">
+                    {/* <div className="flex items-center justify-between">
                       <p className="text-sm text-gray-400">Subtotal</p>
                       <p className="text-lg font-semibold text-gray-900">
                         $399.00
@@ -35,15 +35,15 @@ const CheckoutPage = () => {
                       <p className="text-lg font-semibold text-gray-900">
                         $8.00
                       </p>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="mt-6 flex items-center justify-between">
-                    <p className="text-sm font-medium text-gray-900">Total</p>
+                    <p className="text-md font-medium text-gray-900">Total</p>
                     <p className="text-2xl font-semibold text-gray-900">
                       <span className="text-xs font-normal text-gray-400">
                         USD
                       </span>
-                      408.00
+                      {cartTotal}
                     </p>
                   </div>
                 </div>

@@ -4,7 +4,7 @@ import { CartContext } from "../../contexts/cart-context";
 import { Link } from "react-router-dom";
 
 const CartDropDown = () => {
-  const { cartItems } = useContext(CartContext);
+  const { cartItems,cartTotal } = useContext(CartContext);
   return (
     <div>
       <div className=" absolute  top-18 right-8 z-10 mx-auto px-4 sm:px-6 lg:px-8">
@@ -23,8 +23,8 @@ const CartDropDown = () => {
               ))}
             </div>
             <div className="px-4  py-6 sm:px-8 sm:py-10 ">
-              <div className="mt-6 space-y-3 border-t border-b py-8">
-                <div className="flex items-center justify-between">
+              <div className="mt-6 space-y-3  border-b py-8">
+                {/* <div className="flex items-center justify-between">
                   <p className="text-gray-400">Subtotal</p>
                   <p className="text-lg font-semibold text-gray-900">
                     $2399.00
@@ -33,13 +33,13 @@ const CartDropDown = () => {
                 <div className="flex items-center justify-between">
                   <p className="text-gray-400">Shipping</p>
                   <p className="text-lg font-semibold text-gray-900">$8.00</p>
-                </div>
+                </div> */}
               </div>
               <div className="mt-6 flex items-center justify-between">
                 <p className="text-sm font-medium text-gray-900">Total</p>
                 <p className="text-2xl font-semibold text-gray-900">
                   <span className="text-xs font-normal text-gray-400">USD</span>{" "}
-                  2499.00
+                  {cartTotal}
                 </p>
               </div>
               <div className="mt-6 text-center">
