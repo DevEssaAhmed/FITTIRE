@@ -1,5 +1,6 @@
 import { createContext, useState } from "react";
 
+//! Add item to cart
 // Find if cartItems contains productToAdd
 const addCartItem = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
@@ -16,22 +17,60 @@ const addCartItem = (cartItems, productToAdd) => {
   // return new array with modified cartItems/ new cart item
   return [...cartItems, { ...productToAdd, quantity: 1 }];
 };
+// ! Remove or Decrement Cart Item
+const removeCartItem = (cartItems, cartItemToRemove) => {
+  // Find cart item to remove
+  const existingCartItem = cartItems.find(
+    (cartItem) => cartItem.id === cartItemToRemove.id
+  );
+  // Check if quantity is equal to 1,  if its is remove that item from the cart
+  if (existingCartItem.quantity === 1) {
+    return cartItems.filter((cartItem) => cartItem.id !== cartItemToRemove.id); //? This will keep the values of all the items whom meets this condition. Filter is working in reverse here
+  }
+  //
+  return cartItems.map((cartItem) =>
+    cartItem.id === cartItemToRemove.id
+      ? { ...cartItem, quantity: cartItem.quantity - 1 }
+      : cartItem
+  );
+};
+
+// ! Clear Item from Cart
+const clearCartItem = (cartItems,cartItemToClear) => {
+  return cartItems.filter((cartItem) => cartItem.id !== cartItemToClear.id);
+};
 
 export const CartContext = createContext({
   isCartOpen: false,
   setIsCartOpen: () => {},
   cartItems: [],
   addItemToCart: () => {},
+  removeItemFromCart: () => {},
+  clearItemFromCart: () => {},
 });
 
 export const CartProvider = ({ children }) => {
   const [isCartOpen, setIsCartOpen] = useState(false);
-  // const value = { isCartOpen, setIsCartOpen };
+
   const [cartItems, setCartItems] = useState([]);
 
   const addItemToCart = (productToAdd) => {
     setCartItems(addCartItem(cartItems, productToAdd));
   };
-  const value = { isCartOpen, setIsCartOpen, cartItems, addItemToCart };
+  const removeItemFromCart = (cartItemToRemove) => {
+    setCartItems(removeCartItem(cartItems, cartItemToRemove));
+  };
+
+  const clearItemFromCart = (cartItemToClear) => {
+    setCartItems(clearCartItem(cartItems, cartItemToClear));
+  };
+  const value = {
+    isCartOpen,
+    setIsCartOpen,
+    cartItems,
+    addItemToCart,
+    removeItemFromCart,
+    clearItemFromCart,
+  };
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
