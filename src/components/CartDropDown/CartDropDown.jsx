@@ -4,7 +4,7 @@ import { CartContext } from "../../contexts/cart-context";
 import { Link } from "react-router-dom";
 
 const CartDropDown = () => {
-  const { cartItems,cartTotal } = useContext(CartContext);
+  const { cartItems, cartTotal } = useContext(CartContext);
   return (
     <div>
       <div className=" absolute  top-18 right-8 z-10 mx-auto px-4 sm:px-6 lg:px-8">
@@ -18,9 +18,13 @@ const CartDropDown = () => {
               py-6 sm:px-8 sm:py-10 "
             >
               {/* <div className="mt-6 text-center"> */}
-              {cartItems.map((item) => (
-                <CartItem key={item.id} cartItem={item} />
-              ))}
+              {cartItems.length ? (
+                cartItems.map((item) => (
+                  <CartItem key={item.id} cartItem={item} />
+                ))
+              ) : (
+                <span className="text-center">Your Cart is Empty!</span>
+              )}
             </div>
             <div className="px-4  py-6 sm:px-8 sm:py-10 ">
               <div className="mt-6 space-y-3  border-b py-8">

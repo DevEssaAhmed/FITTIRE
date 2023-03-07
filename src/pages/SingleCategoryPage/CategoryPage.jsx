@@ -12,11 +12,14 @@ const CategoryPage = () => {
     setProducts(categoriesMap[category]);
   }, [category, categoriesMap]);
 
-  return (
-    (!products) ? <h1 className=" text-center text-4xl mt-48">No Products found for this category</h1> :
-    
+  return !products ? (
+    <h1 className=" text-center text-4xl mt-48">
+      No Products found for this category
+    </h1>
+  ) : (
     <div className="mt-20">
       <h2 className="text-center text-5xl">{category.toUpperCase()}</h2>
+
       <div className="flex flex-wrap justify-center">
         {products &&
           products.map((product) => (
