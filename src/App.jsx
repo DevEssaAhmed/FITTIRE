@@ -7,6 +7,7 @@ import Footer from "./components/Footer/Footer";
 import LoginPage from "./pages/LoginPage/LoginPage";
 import SignupPage from "./pages/SignupPage/SignupPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+import CategoryPage from "./pages/SingleCategoryPage/CategoryPage";
 
 const AppLayout = () => {
   return (
@@ -27,7 +28,8 @@ const appRouter = createBrowserRouter([
     // errorElement: <ErrorPage />,
     children: [
       {
-        path: "/",
+        // path: "/",
+        index: true,
         element: <HomePage />,
       },
       // {
@@ -35,11 +37,16 @@ const appRouter = createBrowserRouter([
       //   element: <AboutPage />,
       // },
       {
-        path: "/shop",
+        path: "shop",
         element: <ShopPage />,
+        children: [],
       },
       {
-        path: "/checkout",
+        path: "shop/:category",
+        element: <CategoryPage />,
+      },
+      {
+        path: "checkout",
         element: <CheckoutPage />,
       },
     ],

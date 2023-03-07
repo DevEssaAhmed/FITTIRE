@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
   return (
-    <div className="bottom-0 ">
+    <div className="bottom-0 mt-screen">
       <footer className="py-6 bg-[#f5f5f5] text-black">
         <div className="container px-6 mx-auto space-y-6 divide-y divide-gray-400 md:space-y-12 divide-opacity-50">
           <div className="grid justify-center pt-6 lg:justify-between">
